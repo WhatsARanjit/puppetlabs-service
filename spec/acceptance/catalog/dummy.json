@@ -1,0 +1,26 @@
+{
+  "catalog_format": 1,
+  "catalog_uuid": "10eaf886-18a5-42b6-bb78-725b94f7b6f9",
+  "environment": "production",
+  "name": "dummy",
+  "resources": [{
+    "exported": false,
+    "file": "/etc/puppetlabs/code/environments/production/manifests/site.pp",
+    "line": 1,
+    "parameters": {
+      "ensure": "running",
+      "restart": "/bin/true",
+      "start": "/bin/true",
+      "stop": "/bin/true"
+    },
+    "tags": [
+      "service",
+      "catalog_service",
+      "node",
+      "default",
+      "class"
+    ],
+    "title": "catalog_service",
+    "type": "Service"
+  }]
+}

@@ -13,6 +13,10 @@
     "provider": {
       "description": "The provider to use to manage or inspect the service, defaults to the system service manager",
       "type": "Optional[String[1]]"
+    },
+    "use_catalog": {
+      "description": "Whether to use a custom start, stop, status, or restart command, if it exists, from the current cached catalog",
+      "type": "Optional[Enum[yes, no]]"
     }
   }
 }

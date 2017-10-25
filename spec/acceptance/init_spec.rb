@@ -6,6 +6,8 @@ require 'spec_helper_acceptance'
 describe 'service task' do
   before(:all) do
     apply_manifest('package { "ntp": ensure => present, }')
+    Puppet.stubs(:settings).with('client_datadir').returns(File.dirname(__FILE__))
+    Puppet.stubs(:settings).with('certname').returns('dummy')
   end
   describe 'stop action' do
     it 'stop/status a service' do
@@ -28,6 +30,12 @@ describe 'service task' do
       result = run_task(task_name: 'service', params: 'action=restart name=ntpd')
       expect_multiple_regexes(result: result, regexes: [%r{status : restarted}, %r{Job completed. 1/1 nodes succeeded}])
       result = run_task(task_name: 'service', params: 'action=status name=ntpd')
+      expect_multiple_regexes(result: result, regexes: [%r{status : running}, %r{enabled : false}, %r{Job completed. 1/1 nodes succeeded}])
+    end
+    it 'restart/status a service with use_catalog' do
+      result = run_task(task_name: 'service', params: 'action=restart name=catalog_service use_catalog=yes')
+      expect_multiple_regexes(result: result, regexes: [%r{status : restarted}, %r{Job completed. 1/1 nodes succeeded}])
+      result = run_task(task_name: 'service', params: 'action=status name=catalog_service use_catalog=yes')
       expect_multiple_regexes(result: result, regexes: [%r{status : running}, %r{enabled : false}, %r{Job completed. 1/1 nodes succeeded}])
     end
   end
